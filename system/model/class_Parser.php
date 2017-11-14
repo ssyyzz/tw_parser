@@ -6,6 +6,12 @@ class model_Parser
 	
 	function init($url) 
 	{
+		$url_e = explode('://', $url);
+		$url_d = count($url_e) == 1 ? $url_e[0] : $url_e[1];
+		$url_d = idn_to_ascii($url_d);
+		
+		$url = (count($url_e) == 1) ? $url_d : "{$url_e[0]}://{$url_d}";
+		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
